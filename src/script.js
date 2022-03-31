@@ -34,7 +34,7 @@ for (
     i < count * 3;
     i++ // Multiply by 3 for same reason
 ) {
-    positions[i] = (Math.random() - 0.5) * 10; // Math.random() - 0.5 to have a random value between -0.5 and +0.5
+    positions[i] = (Math.random() - 0.5) * 5; // Math.random() - 0.5 to have a random value between -0.5 and +0.5
     colors[i] = Math.random();
 }
 
@@ -59,7 +59,7 @@ const particles = new THREE.Points(particlesGeometry, particlesMaterial);
 scene.add(particles);
 
 const geometry = new THREE.SphereGeometry( 0.5, 32, 32 );
-const material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+const material = new THREE.MeshBasicMaterial( { color: 0x000 } );
 const sphere = new THREE.Mesh( geometry, material );
 scene.add( sphere );
 /**
@@ -100,9 +100,8 @@ scene.add(camera);
 // Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
-controls.enableZoom = false;
-// controls.minZoom = 0.1;
-// controls.maxZoom = 0.1;
+// controls.enableZoom = false;
+
 
 /**
  * Renderer
@@ -120,8 +119,16 @@ const clock = new THREE.Clock();
 
 const tick = () => {
     const elapsedTime = clock.getElapsedTime();
-    camera.position.x = Math.sin(elapsedTime * Math.PI * 0.01) * 2
-    // camera.position.z = Math.cos(elapsedTime * Math.PI * 0.01) * 2
+
+    for(let i = 0; i < count; i++)
+    {
+        let i3 = i * 8
+
+        const x = particlesGeometry.attributes.position.array[i3]
+        particlesGeometry.attributes.position.array[i3 + 1] = Math.tan(elapsedTime + x)
+    }
+    particlesGeometry.attributes.position.needsUpdate = true
+
     // Update controls
     controls.update();
 
