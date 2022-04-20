@@ -7,7 +7,7 @@ import * as dat from "lil-gui";
  * Base
  */
 // Debug
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -122,7 +122,7 @@ const tick = () => {
 
     for(let i = 0; i < count; i++)
     {
-        let i3 = i * 8
+        let i3 = i * 4
 
         const x = particlesGeometry.attributes.position.array[i3]
         particlesGeometry.attributes.position.array[i3 + 1] = Math.tan(elapsedTime + x)
